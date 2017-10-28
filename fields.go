@@ -122,7 +122,7 @@ func (f Fields) Unpack(r io.Reader, val reflect.Value, options *Options) error {
 		}
 		if field.Type == Struct {
 			if field.Slice {
-				vals := reflect.MakeSlice(v.Type(), length, length)
+				vals := reflect.Indirect(reflect.New(reflect.ArrayOf(length, v.Type().Elem())))
 				for i := 0; i < length; i++ {
 					v := vals.Index(i)
 					fields, err := parseFields(v)
